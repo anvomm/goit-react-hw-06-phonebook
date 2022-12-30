@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import { GlobalStyles } from 'utils/GlobalStyles';
 import { Section } from './Section/Section';
 import { ContactForm } from './ContactForm/ContactForm';
@@ -6,15 +5,6 @@ import { ContactList } from './ContactList/ContactList';
 import { Filter } from './Filter/Filter';
 
 export const App = () => {
-  const [contacts, setContacts] = useState(
-    JSON.parse(localStorage.getItem('contacts')) || []
-  );
-  const [filter, setFilter] = useState('');
-
-  useEffect(() => {
-    window.localStorage.setItem('contacts', JSON.stringify(contacts));
-  }, [contacts]);
-
   return (
     <div>
       <Section>

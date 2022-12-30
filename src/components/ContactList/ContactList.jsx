@@ -1,32 +1,31 @@
-import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
+import { getContacts } from 'redux/contacts/contacts-selectors';
+import { getFilter } from 'redux/filter/filter-selectors';
 import { Contact } from 'components/Contact/Contact';
-import { List, ListItem } from './ContactList.styled';
+import { List, ListItem, Text, Span } from './ContactList.styled';
 
-export const ContactList = ({ contacts, deleteContact }) => {
-  return (
+export const ContactList = () => {
+  const contacts = useSelector(getContacts);
+  const filter = useSelector(getFilter);
+
+  const filteredContacts = contacts.filter(({ name }) =>
+    name.toLowerCase().includes(filter)
+  );
+
+  return contacts.length !== 0 && filteredContacts.length !== 0 ? (
     <List>
-      {contacts.map(({ name, number, id }) => (
+      {filteredContacts.map(({ name, number, id }) => (
         <ListItem key={id}>
-          <Contact
-            name={name}
-            number={number}
-            id={id}
-            contacts={contacts}
-            deleteContact={deleteContact}
-          ></Contact>
+          <Contact name={name} number={number} id={id}></Contact>
         </ListItem>
       ))}
     </List>
+  ) : contacts.length === 0 ? (
+    <Text>Unfortunately your contacts list is empty</Text>
+  ) : (
+    <Text>
+      Your list does not contain the contact named
+      <Span> {filter}</Span>
+    </Text>
   );
-};
-
-ContactList.propTypes = {
-  contacts: PropTypes.arrayOf(
-    PropTypes.shape({
-      name: PropTypes.string.isRequired,
-      number: PropTypes.string.isRequired,
-      id: PropTypes.string.isRequired,
-    })
-  ).isRequired,
-  deleteContact: PropTypes.func,
 };

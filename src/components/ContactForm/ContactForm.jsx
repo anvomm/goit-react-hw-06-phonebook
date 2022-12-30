@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addContact } from 'redux/contacts/contactsSlice';
 import { getContacts } from 'redux/contacts/contacts-selectors';
 import { nanoid } from '@reduxjs/toolkit';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { Form, Wrap, Label, Input, Button } from './ContactForm.styled';
 
 export const ContactForm = () => {
@@ -15,6 +17,19 @@ export const ContactForm = () => {
   const resetForm = () => {
     setName('');
     setNumber('');
+  };
+
+  const notificateIsExist = name => {
+    toast(`${name} is already in contacts.`, {
+      position: 'top-right',
+      autoClose: 5000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'light',
+    });
   };
 
   const inputHandler = e => {
@@ -38,7 +53,8 @@ export const ContactForm = () => {
     );
 
     if (isExist) {
-      alert(`${name} is already in contacts.`);
+      /* alert(`${name} is already in contacts.`); */
+      notificateIsExist(name);
       resetForm();
       return;
     }

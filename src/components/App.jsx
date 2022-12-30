@@ -3,6 +3,7 @@ import { Section } from './Section/Section';
 import { ContactForm } from './ContactForm/ContactForm';
 import { ContactList } from './ContactList/ContactList';
 import { Filter } from './Filter/Filter';
+import { StyledToastContainer } from './ContactForm/ContactForm.styled';
 
 export const App = () => {
   return (
@@ -18,6 +19,7 @@ export const App = () => {
 
         <ContactList />
       </Section>
+      <StyledToastContainer />
 
       <GlobalStyles />
     </div>
